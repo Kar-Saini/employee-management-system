@@ -30,6 +30,39 @@ model Admin {
   created_at DateTime @default(now())
 }
 
+model VisaPerson {
+  id           String    @id @default(cuid())
+  name         String
+  passport_num String
+  nationality  String
+  entry_date   DateTime  @db.Date
+  exit_date    DateTime? @db.Date
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now()) @updatedAt
+  logs         VisaLog[]
+
+  @@index([passport_num])
+  @@index([entry_date])
+}
+
+model VisaLog {
+  id           String     @id @default(cuid())
+  visaPersonId String
+  visaPerson   VisaPerson @relation(fields: [visaPersonId], references: [id])
+  action       VisaAction
+  note         String?
+  createdAt    DateTime   @default(now())
+
+  @@index([visaPersonId])
+}
+
+enum VisaAction {
+  ADDED
+  ENTRY
+  EXIT
+  UPDATED
+}
+
 model PayslipLog {
   id         String      @id @default(cuid())
   employeeId String

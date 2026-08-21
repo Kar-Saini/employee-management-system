@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -iE \"^\\(plane|stamp|id-card|file-text|receipt|passport|globe|calendar-clock|user-plus|arrow-right|chevron-right\\)\\\\.js$\")",
+      "PowerShell(npx prisma generate 2>&1)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/prisma/package.json'\\).version\\)\")",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/@prisma/client/package.json'\\).version\\)\")",
+      "PowerShell(& \".\\\\node_modules\\\\.bin\\\\prisma.exe\" generate 2>&1)",
+      "PowerShell(& \".\\\\node_modules\\\\.bin\\\\tsc.cmd\" --noEmit 2>&1)",
+      "PowerShell(node \".\\\\node_modules\\\\typescript\\\\bin\\\\tsc\" --noEmit 2>&1)",
+      "PowerShell($hasUrl = \\(Select-String -Path .env -Pattern \"^DATABASE_URL=\" -Quiet\\); \"DATABASE_URL present: $hasUrl\"; & \".\\\\node_modules\\\\.bin\\\\prisma.exe\" migrate status 2>&1 | Select-Object -Last 20)",
+      "PowerShell(& \".\\\\node_modules\\\\.bin\\\\prisma.exe\" migrate deploy 2>&1)",
+      "Bash(echo \"--- exit: $? \\(1 = no errors found\\) ---\")",
+      "Bash(sed -i 's/chromium.launch\\(\\)/chromium.launch\\({ channel: \"msedge\" }\\)/' .visual-check.mjs)",
+      "Bash(node .visual-check.mjs)",
+      "PowerShell(node \".\\\\node_modules\\\\typescript\\\\bin\\\\tsc\" --noEmit)",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3941/dashboard/visa\" -UseBasicParsing -TimeoutSec 60; Write-Output \"status $\\($r.StatusCode\\)\" } catch { Write-Output \"dev server not reachable: $\\($_.Exception.Message\\)\" })",
+      "PowerShell(node .\\\\.visual-check.mjs)",
+      "PowerShell($conns = Get-NetTCPConnection -LocalPort 3941 -State Listen -ErrorAction SilentlyContinue; if \\($conns\\) { $conns | ForEach-Object { $p = Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue; \"PID $\\($_.OwningProcess\\) : $\\($p.ProcessName\\)\" } } else { \"nothing listening on 3941\" })"
+    ]
+  }
+}
